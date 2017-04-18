@@ -216,4 +216,41 @@ class DefaultController extends Controller
 
         return $this->redirectToRoute('homepage');
     }
+
+    /**
+     * @Route("/search", name="search")
+     */
+    public function searchAction(Request $request)
+    {
+        $text = $request->get('text');
+
+        $mgr = $this->getDoctrine()->getManager();
+
+        $nurls = $mgr->getRepository('AppBundle:Nurl')->findAll();
+
+        $nurls = array_filter($nurls, function($nurl) use ($text) {
+            $t = $nurl->getTitle();
+            $s = $nurl->getSummary();
+            $b = $nurl->getBody();
+            if(strpos($t, $text) !== false) {
+                return true;
+            }
+
+            if(strpos($t, $text) !== false) {
+                return true;
+            }
+
+
+            if(strpos($t, $text) !== false) {
+               return true;             
+             }
+
+             return false;
+        });
+
+        return $this->render('default/index.html.twig', [
+            'nurls' => $nurls,
+            'hl' => true
+        ]);
+    }
 }

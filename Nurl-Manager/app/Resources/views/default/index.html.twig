@@ -1,6 +1,18 @@
 {% extends 'default/default_layout.html.twig' %}
 
+
+{% if hl is not defined %}
+    {% set hl = false %}
+{% endif %}
+
 {% block content %}
+    <div id="search">
+        <form action="{{ path('search') }}" method="get">
+            <label for="text">Text: </label>
+            <input type="text" id="text" name="text"/>
+            <input type="submit" value="Search"/>
+        </form>
+    </div>
     {% for nurl in nurls %}
         <div class="nurl-container">
             <h3>{{ nurl.title }}</h3>
@@ -13,4 +25,12 @@
             <p>{{ nurl.body }}</p>
         </div>
     {% endfor %}
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {% if hl == true %}
+        <script type="text/javascript" src="js/hl.js"></script>
+    {% endif %}
 {% endblock %}
