@@ -1,0 +1,15 @@
+{% extends 'default/default_layout.html.twig' %}
+
+{% block content %}
+    {% for nurl in nurls %}
+        <div class="nurl-container">
+            <h3>{{ nurl.title }}</h3>
+            {% for tag in nurl.tags %}
+                <span class="nurl-tag">{{ tag.title }}</span>
+            {% endfor %}
+            <p><strong>{{ nurl.summary }}</strong></p>
+            <hr>
+            <p>{{ nurl.body }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}

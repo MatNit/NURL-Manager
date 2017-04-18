@@ -1,0 +1,58 @@
+h1 {
+    text-align: center;
+}
+
+#navigation {
+    border: 1px solid #359000;
+    background-color: #ade6a6;
+    padding: 8px;
+    margin: 8px;
+    float: left;
+}
+
+#navigation ul {
+    list-style-type: none;
+}
+
+#content {
+    border: 1px solid #359000;
+    background-color: #ade6a6;
+    margin: 8px;
+    padding: 8px;
+    min-height: 100%;
+    width: 80%;
+    float: right;
+}
+
+footer {
+    background-color: dimgray;
+    color: whitesmoke;
+    font-style: italic;
+    text-align: center;
+    padding: 10px;
+    margin: 50px 20px 20px 20px;
+    float: right;
+    width: 80%;
+}
+
+.nurl-container {
+    border: 1px solid #359000;
+    padding: 8px;
+    margin: 4px;
+}
+
+.nurl-container h3 {
+    color: #359000;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.nurl-tag {
+    color: dimgray;
+    background-color: whitesmoke;
+    padding: 4px;
+    text-align: center;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
