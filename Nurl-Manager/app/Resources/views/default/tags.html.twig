@@ -10,6 +10,17 @@
         <input type="submit" value="Submit"/>
     </form>
     {% for tag in tags %}
-        <span class="nurl-tag">{{ tag.title }}</span>
+        {% if tag.accepted == false %}
+            <div class="tag-container">
+                <a href="{{ path('up_vote', {'id': tag.id}) }}">Up vote</a>
+                <a href="{{ path('down_vote', {'id': tag.id}) }}">Down vote</a>
+                <span><i>votes: {{ tag.votes }}</i></span>
+                <span class="nurl-tag">{{ tag.title }}</span>
+            </div>
+        {% else %}
+            <div class="tag-container">
+                <span class="nurl-tag">{{ tag.title }}</span>
+            </div>
+        {% endif %}
     {% endfor %}
 {% endblock %}

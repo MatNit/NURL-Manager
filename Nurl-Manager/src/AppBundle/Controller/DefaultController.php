@@ -122,4 +122,52 @@ class DefaultController extends Controller
 
         return $this->redirectToRoute('view_tags');
     }
+
+    /**
+     * @Route("/tagup", name="up_vote")
+     */
+    public function tagUpAction(Request $request)
+    {
+        $user = $this->getUser();
+
+        $mgr = $this->getDoctrine()->getManager();
+
+        $tag = $mgr->getRepository('AppBundle:Tag')->find($request->get('id'));
+
+        if($user) {
+            $tag->setVotes($tag->getVotes() + 5);
+        } else {
+            $tag->setVotes($tag->getVotes() + 1);
+        }
+
+        $mgr->persist($tag);
+
+        $mgr->flush();
+
+        return $this->redirectToRoute('view_tags');
+    }
+
+    /**
+     * @Route("/tagdown", name="down_vote")
+     */
+    public function tagDownAction(Request $request)
+    {
+        $user = $this->getUser();
+
+        $mgr = $this->getDoctrine()->getManager();
+
+        $tag = $mgr->getRepository('AppBundle:Tag')->find($request->get('id'));
+
+        if($user) {
+            $tag->setVotes($tag->getVotes() - 5);
+        } else {
+            $tag->setVotes($tag->getVotes() - 1);
+        }
+
+        $mgr->persist($tag);
+
+        $mgr->flush();
+
+        return $this->redirectToRoute('view_tags');
+    }
 }
