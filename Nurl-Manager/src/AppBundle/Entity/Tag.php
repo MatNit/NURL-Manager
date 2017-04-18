@@ -33,7 +33,7 @@ class Tag
      * @ORM\ManyToOne(targetEntity="User", inversedBy="nurls")
      * @ORM\JoinColumn(name="`user`", referencedColumnName="id")
      */
-    private $user;
+    private $user = null;
 
     /**
      * @ORM\Column(type="boolean")

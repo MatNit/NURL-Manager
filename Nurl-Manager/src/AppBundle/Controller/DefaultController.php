@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Nurl;
+use AppBundle\Entity\Tag;
 use AppBundle\Forms\MakeNurlType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -28,7 +30,11 @@ class DefaultController extends Controller
      */
     public function makeNurlFormAction(Request $request)
     {
-        $form = $this->createForm(MakeNurlType::class);
+        $tags = $this->getDoctrine()->getRepository('AppBundle:Tag')->findAll();
+
+        $form = $this->createForm(MakeNurlType::class, new Nurl(), [
+            'tags' => $tags
+        ]);
 
         return $this->render('default/make_nurl.html.twig', [
             'form' => $form->createView()
@@ -45,11 +51,13 @@ class DefaultController extends Controller
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if($form->isSubmitted()) {
 
             $nurl = $form->getData();
 
             $user = $this->getUser();
+
+//            $tags = $form->get('tags')->getData();
 
             $manager = $this->getDoctrine()->getManager();
 
@@ -64,6 +72,54 @@ class DefaultController extends Controller
             $manager->flush();
         }
 
+        if($form->isSubmitted() && !$form->isValid()) {
+
+            return $this->render('default/error.html.twig', [
+                'text' => 'Invalid form submitted.'
+            ]);
+        }
+
         return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @Route("/viewtags", name="view_tags")
+     */
+    public function viewTagsAction(Request $request)
+    {
+        $tags = $this->getDoctrine()->getRepository('AppBundle:Tag')->findAll();
+
+        return $this->render('default/tags.html.twig', [
+            'tags' => $tags
+        ]);
+    }
+
+    /**
+     * @Route("/maketag", name="make_tag")
+     * @Method({"POST"})
+     */
+    public function makeTagAction(Request $request)
+    {
+        $title = $request->get('title');
+
+        $user = $this->getUser();
+
+        $manager = $this->getDoctrine()->getManager();
+
+        $tag = new Tag();
+
+        $tag->setTitle($title);
+
+        if($user) {
+            $tag->setUser($user);
+            $tag->setAccepted(true);
+            $manager->persist($user);
+        }
+
+        $manager->persist($tag);
+
+        $manager->flush();
+
+        return $this->redirectToRoute('view_tags');
     }
 }

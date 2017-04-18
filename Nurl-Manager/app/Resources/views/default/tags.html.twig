@@ -1,0 +1,15 @@
+{% extends 'default/default_layout.html.twig' %}
+
+{% block content %}
+    <h3>New Tag</h3>
+    <form action="{{ path('make_tag') }}" method="post" id="tag-form">
+        <section>
+            <label for="title">Title: </label>
+            <input type="text" required id="title" name="title"/>
+        </section>
+        <input type="submit" value="Submit"/>
+    </form>
+    {% for tag in tags %}
+        <span class="nurl-tag">{{ tag.title }}</span>
+    {% endfor %}
+{% endblock %}
