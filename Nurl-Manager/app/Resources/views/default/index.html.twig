@@ -8,6 +8,7 @@
                 <span class="nurl-tag">{{ tag.title }}</span>
             {% endfor %}
             <p><strong>{{ nurl.summary }}</strong></p>
+            <a href="{{ path('report_form', {'id': nurl.id}) }}">report</a>
             <hr>
             <p>{{ nurl.body }}</p>
         </div>

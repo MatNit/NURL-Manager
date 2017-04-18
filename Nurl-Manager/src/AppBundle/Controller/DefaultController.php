@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Nurl;
+use AppBundle\Entity\Report;
 use AppBundle\Entity\Tag;
 use AppBundle\Forms\MakeNurlType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -18,7 +19,7 @@ class DefaultController extends Controller
     public function homeAction(Request $request)
     {
         $mgr= $this->getDoctrine()->getManager();
-        $n = $mgr->getRepository('AppBundle:Nurl')->findAll();
+        $n = $mgr->getRepository('AppBundle:Nurl')->findBy(['frozen' => false]);
         return $this->render('default/index.html.twig', [
             'nurls' => $n
         ]);
@@ -169,5 +170,50 @@ class DefaultController extends Controller
         $mgr->flush();
 
         return $this->redirectToRoute('view_tags');
+    }
+
+    /**
+     * @Route("/reportform", name="report_form")
+     */
+    public function reportFormAction(Request $request)
+    {
+        $id = $request->get('id');
+
+        return $this->render('default/report.html.twig', [
+            'id' => $id
+        ]);
+    }
+
+    /**
+     * @Route("/report/{id}", name="report")
+     * @Method({"POST"})
+     */
+    public function reportAction(Request $request)
+    {
+        $id = $request->get('id');
+        $message = $request->get('message');
+
+        $email = $request->get('email');
+
+        $mgr = $this->getDoctrine()->getManager();
+
+        $report = new Report();
+
+        $report->setMessage($message);
+        $report->setEmail($email);
+
+        $nurl = $mgr->getRepository('AppBundle:Nurl')->find($id);
+
+        $report->setNurl($nurl);
+
+        $nurl->setFrozen(true);
+
+        $mgr->persist($report);
+
+        $mgr->persist($nurl);
+
+        $mgr->flush();
+
+        return $this->redirectToRoute('homepage');
     }
 }

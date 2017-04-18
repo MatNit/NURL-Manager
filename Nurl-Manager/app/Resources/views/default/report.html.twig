@@ -1,0 +1,15 @@
+{% extends 'default/default_layout.html.twig' %}
+
+{% block content %}
+    <form action="{{ path('report', {'id': id}) }}" method="post">
+        <div>
+            <label for="message">Message: </label>
+            <textarea id="message" name="message" required></textarea>
+        </div>
+        <div>
+            <label for="email">Email: </label>
+            <input type="email" id="email" name="email"/>
+        </div>
+        <input type="submit" value="Submit"/>
+    </form>
+{% endblock %}

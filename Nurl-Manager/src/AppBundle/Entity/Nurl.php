@@ -67,6 +67,11 @@ class Nurl
     private $accepted = false;
 
     /**
+     * @ORM\OneToMany(targetEntity="Report", mappedBy="report")
+     */
+    private $reports;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Collection", mappedBy="nurls")
      */
     private $collections;
@@ -77,6 +82,7 @@ class Nurl
         $this->edit = new \DateTime();
         $this->tags = new ArrayCollection();
         $this->collections = new ArrayCollection();
+        $this->reports = new ArrayCollection();
     }
 
     /**
@@ -323,5 +329,68 @@ class Nurl
     public function getCollections()
     {
         return $this->collections;
+    }
+
+    /**
+     * Add report
+     *
+     * @param \AppBundle\Entity\Report $report
+     *
+     * @return Nurl
+     */
+    public function addReport(\AppBundle\Entity\Report $report)
+    {
+        $this->reports[] = $report;
+
+        return $this;
+    }
+
+    /**
+     * Remove report
+     *
+     * @param \AppBundle\Entity\Report $report
+     */
+    public function removeReport(\AppBundle\Entity\Report $report)
+    {
+        $this->reports->removeElement($report);
+    }
+
+    /**
+     * Get reports
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReports()
+    {
+        return $this->reports;
+    }
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $frozen = false;
+
+    /**
+     * Set frozen
+     *
+     * @param boolean $frozen
+     *
+     * @return Nurl
+     */
+    public function setFrozen($frozen)
+    {
+        $this->frozen = $frozen;
+
+        return $this;
+    }
+
+    /**
+     * Get frozen
+     *
+     * @return boolean
+     */
+    public function getFrozen()
+    {
+        return $this->frozen;
     }
 }
