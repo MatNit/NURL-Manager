@@ -278,4 +278,30 @@ class DefaultController extends Controller
 
         return $this->redirectToRoute('homepage');
     }
+
+    /**
+     * @Route("/delete_account", name="delete_account_form")
+     * @Method({"GET"})
+     */
+    public function deleteAccountFormAction(Request $request)
+    {
+        return $this->render('default/delete_account.html.twig');
+    }
+
+    /**
+     * @Route("/delete_account", name="delete_account")
+     * @Method({"POST"})
+     */
+    public function deleteAccountAction(Request $request)
+    {
+        $user = $this->getUser();
+
+        $mgr = $this->getDoctrine()->getManager();
+
+        $mgr->remove($user);
+
+        $mgr->flush();
+
+        return $this->redirectToRoute('homepage');
+    }
 }
