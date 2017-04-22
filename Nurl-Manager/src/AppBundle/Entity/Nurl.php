@@ -41,7 +41,7 @@ class Nurl
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="nurls")
-     * @ORM\JoinColumn(name="`user`", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
      */
     private $user = null;
 

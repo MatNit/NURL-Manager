@@ -47,7 +47,7 @@ class User extends BaseUser
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="Nurl", mappedBy="`user`")
+     * @ORM\OneToMany(targetEntity="Nurl", mappedBy="user")
      */
     private $nurls;
 

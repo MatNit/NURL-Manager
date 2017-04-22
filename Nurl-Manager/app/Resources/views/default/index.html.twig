@@ -22,6 +22,15 @@
             <p><strong>{{ nurl.summary }}</strong></p>
             <a href="{{ path('report_form', {'id': nurl.id}) }}">report</a>
             <hr>
+            {{ nurl.user.username }}
+            {% if app.user and nurl.user.id ==app.user.id %}
+                <div>
+                    <form action="{{ path('delete_nurl', {'id': nurl.id}) }}" method="post">
+                        <input type="submit" value="delete"/>
+                    </form>
+                </div>
+                <hr>
+            {% endif %}
             <p>{{ nurl.body }}</p>
         </div>
     {% endfor %}

@@ -253,4 +253,29 @@ class DefaultController extends Controller
             'hl' => true
         ]);
     }
+
+    /**
+     * @Route("/delete", name="delete_nurl")
+     * @Method({"POST"})
+     */
+    public function deleteNurl(Request $request)
+    {
+        $id = $request->get('id');
+
+        $user = $this->getUser();
+
+        $manager = $this->getDoctrine()->getManager();
+
+        $nurl = $manager->getRepository('AppBundle:Nurl')->find($id);
+
+        $author = $nurl->getUser();
+
+        if($author->getId() === $user->getId()) {
+            $manager->remove($nurl);
+
+            $manager->flush();
+        }
+
+        return $this->redirectToRoute('homepage');
+    }
 }
