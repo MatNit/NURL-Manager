@@ -24,6 +24,9 @@
         </div>
         <h1>Nurl Manager</h1>
         <div id="content">
+            {% if app.user %}
+                <strong>Logged in as: {{ app.user.username }}</strong>
+            {% endif %}
             {% block content %}{% endblock %}
         </div>
         <footer>
