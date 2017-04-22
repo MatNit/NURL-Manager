@@ -3,8 +3,6 @@
 
     var nurls = document.getElementsByClassName('nurl-container');
 
-    console.log('search: ' + searchText);
-
     for(var i=0; i<nurls.length; i++) {
         var inner = nurls[i].innerHTML;
         inner = inner.replace(new RegExp(searchText, 'g'), '<span class="hl">' + searchText + '</span>');
