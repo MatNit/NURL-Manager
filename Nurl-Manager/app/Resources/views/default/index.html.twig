@@ -27,7 +27,7 @@
             {% else %}
                 (anon)
             {% endif %}
-            {% if app.user and nurl.user.id ==app.user.id %}
+            {% if app.user and nurl.user and nurl.user.id ==app.user.id %}
                 <div>
                     <form action="{{ path('delete_nurl', {'id': nurl.id}) }}" method="post">
                         <input type="submit" value="delete"/>
